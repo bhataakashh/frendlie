@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Frendlie</title>
+<meta name="theme-color" content="#e8186d"><meta name="description" content="Frendlie: a safe, free friendship space for Jammu &amp; Kashmir (18+)">
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Frendlie">
+<script>try{var t=localStorage.getItem('fr_theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}</script>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg1:#e8186d;--bg2:#7a3fe0;--card:#fff;--txt:#2b1230;--mut:#7d6a82;--btn:#ff4f6d;--line:#f0dbe8;--in:#fff4f9}
@@ -49,6 +53,45 @@ a{color:var(--btn)}
 .callbar .av{width:130px;height:130px;font-size:60px;margin-bottom:16px}
 .pulse{animation:p 1.4s infinite}@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 audio{display:none}
+
+/* ===== v4 design ===== */
+:root[data-theme=dark]{--card:#241230;--txt:#f7eaf4;--mut:#b9a2be;--line:#43284d;--in:#321840;--sh:0 8px 28px rgba(0,0,0,.45)}
+:root[data-theme=light]{--card:#fff;--txt:#2b1230;--mut:#7d6a82;--line:#f0dbe8;--in:#fff4f9;--sh:0 8px 28px rgba(60,10,70,.16)}
+:root[data-theme=dark] body{background:#14081c linear-gradient(160deg,#4a1240,#1f1050) fixed}
+body{background-size:200% 200%;animation:bgm 18s ease-in-out infinite alternate;-webkit-font-smoothing:antialiased}
+@keyframes bgm{from{background-position:0 0}to{background-position:100% 100%}}
+#app{padding:18px 16px 170px}
+.card{border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:var(--sh);animation:fin .35s ease both}
+@keyframes fin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.btn{border-radius:16px;box-shadow:0 4px 14px rgba(232,24,109,.28);transition:transform .15s,box-shadow .15s,filter .15s}
+.btn.g{box-shadow:none}.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}.btn:active{transform:scale(.96)}
+input,select,textarea{border-radius:14px;margin:8px 0;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--btn);box-shadow:0 0 0 4px rgba(255,79,109,.18)}
+.logo{box-shadow:0 8px 24px rgba(0,0,0,.25);animation:flt 4s ease-in-out infinite}
+@keyframes flt{50%{transform:translateY(-4px)}}
+.bell{font-size:20px;cursor:pointer}
+nav{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));padding:6px;border-radius:20px;box-shadow:var(--sh);backdrop-filter:blur(10px)}
+nav button{transition:background .2s,color .2s;position:relative}.nav .pill,nav .pill{position:absolute;top:0;right:4px;font-size:10px;padding:1px 6px}
+.m{border-radius:18px;animation:fin .2s ease both}
+.chip{border-radius:16px}
+.typing{display:flex;gap:4px;align-items:center;font-size:12px;color:var(--mut);padding:4px 8px}
+.typing[hidden]{display:none}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:tp 1.1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s;margin-right:4px}
+@keyframes tp{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.spin{width:34px;height:34px;border:4px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.spin.gs{position:fixed;top:14px;left:50%;margin-left:-17px;z-index:99;display:none;border-color:rgba(255,79,109,.3);border-top-color:var(--btn);background:var(--card);box-shadow:var(--sh)}
+.boot{display:flex;justify-content:center;padding:60px 0}
+.conf{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
+.conf i{position:absolute;top:-30px;font-style:normal;animation:cf 2.6s ease-in forwards}
+@keyframes cf{to{transform:translateY(105vh) rotate(360deg);opacity:.7}}
+@media(min-width:900px){
+ #app{max-width:660px;padding:96px 16px 40px}
+ nav{left:50%;right:auto;transform:translateX(-50%);top:14px;bottom:auto;width:min(660px,94vw);padding:6px 8px}
+ nav button{font-size:12px;padding:8px 4px}.msgs{height:52dvh}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -130,15 +173,15 @@ async function need(ids){const m=[...new Set(ids)].filter(i=>i&&!PEOPLE[i]&&i!==
   await Promise.all(m.map(async i=>{const s=await getDoc(doc(db,'users',i));if(s.exists())PEOPLE[i]={uid:i,...s.data()}}))}
 function soft(){if(!ME||tab==='me'||tab==='gnew'||call)return;rr()}
 function unreadCount(){return NOTIFS.filter(n=>!n.read).length}
-async function boot(){stopAll();const mine=c=>getDocs(query(collection(db,c),where('from','==',ME.uid)));
+async function boot(){seenN=null;stopAll();const mine=c=>getDocs(query(collection(db,c),where('from','==',ME.uid)));
   const [us,lk,ps]=await Promise.all([getDocs(query(collection(db,'users'),limit(80))),mine('likes'),mine('passes')]);
   PEOPLE={};us.forEach(d=>{if(d.id!==ME.uid)PEOPLE[d.id]={uid:d.id,...d.data()}});
   MY.likes=new Set(lk.docs.map(d=>d.data().to));MY.passes=new Set(ps.docs.map(d=>d.data().to));
   unM=onSnapshot(query(collection(db,'chats'),where('members','array-contains',ME.uid)),async s=>{MATCHES=s.docs.map(d=>({id:d.id,...d.data()}));await need(MATCHES.flatMap(m=>m.members));soft()},e=>toast('Chats: '+e.code));
   unG=onSnapshot(query(collection(db,'groups'),where('members','array-contains',ME.uid)),async s=>{GROUPS=s.docs.map(d=>({id:d.id,...d.data()}));await need(GROUPS.flatMap(g=>g.members));soft()},e=>toast('Groups: '+e.code));
-  unN=onSnapshot(query(collection(db,'notifs'),where('to','==',ME.uid),limit(40)),async s=>{NOTIFS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts);await need(NOTIFS.map(n=>n.from));soft()},e=>toast('Notifs: '+e.code));
+  unN=onSnapshot(query(collection(db,'notifs'),where('to','==',ME.uid),limit(40)),async s=>{NOTIFS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts);await need(NOTIFS.map(n=>n.from));pingNew();soft()},e=>toast('Notifs: '+e.code));
   listenCalls()}
-function watch(path){unMsg&&unMsg();MSGS=[];unMsg=onSnapshot(query(collection(db,...path,'messages'),orderBy('ts')),s=>{MSGS=s.docs.map(d=>d.data());rr()},e=>toast('Cannot load messages: '+e.code))}
+function watch(path){unMsg&&unMsg();MSGS=[];unMsg=onSnapshot(query(collection(db,...path,'messages'),orderBy('ts')),s=>{const old=MSGS.length;MSGS=s.docs.map(d=>d.data());const lm=MSGS[MSGS.length-1];if(old&&MSGS.length>old&&lm&&lm.from!==ME.uid)ping('New message',(P(lm.from).name||'Someone')+' sent you a message');rr()},e=>toast('Cannot load messages: '+e.code))}
 const other=m=>m.members.find(x=>x!==ME.uid);
 async function notify(to,type,extra){if(to===ME.uid)return;await addDoc(collection(db,'notifs'),{to,from:ME.uid,type,...extra,read:false,ts:Date.now()})}
 
@@ -150,7 +193,7 @@ function listenCalls(){unCall&&unCall();
     const v=snap.val();if(!v)return;
     if(Date.now()-(v.ts||0)>60000){remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});return}
     if(v.state==='ringing'&&!call){await need([v.from]);
-      call={room:v.room,peer:v.from,role:'callee',state:'ringing'};render()}
+      call={room:v.room,peer:v.from,role:'callee',state:'ringing'};ping('Incoming call',(P(v.from).name||'Someone')+' is calling you 📞');render()}
     else if(v.state==='accepted'&&call&&call.room===v.room&&call.role==='caller'&&call.state==='calling'){
       clearTimeout(callTimer);call.state='connecting';render();remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});await startPeer(true)}
     else if(v.state==='ended'&&call&&call.room===v.room){remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});endCall(false)}
@@ -218,7 +261,7 @@ async function loadAnswers(){const s=await getDocs(query(collection(db,'answers'
 const shared=p=>(p.interests||[]).filter(i=>(ME.interests||[]).includes(i)).length;
 const chips=(arr,on,a)=>arr.map(i=>`<span class="chip${on(i)?' on':''}" data-a="${a}" data-v="${i}">${i}</span>`).join('');
 const tags=a=>(a||[]).map(i=>`<span class="chip" style="cursor:default;padding:4px 10px">${esc(i)}</span>`).join('');
-const logoTop=s=>`<div class="top"><img class="logo"${s?` style="width:${s}px;height:${s}px;border-radius:18px;padding:5px"`:''} src="${LOGO}" alt="Frendlie"></div>`;
+const logoTop=s=>`<div class="top"><button class="bell" data-a="theme" aria-label="Toggle dark mode">${document.documentElement.dataset.theme==='dark'?'☀️':'🌙'}</button><img class="logo"${s?` style="width:${s}px;height:${s}px;border-radius:18px;padding:5px"`:''} src="${LOGO}" alt="Frendlie"></div>`;
 
 function authHtml(){const up=authMode==='up';
 return `${logoTop()}
@@ -255,7 +298,7 @@ return MATCHES.map(m=>{const o=P(other(m));return `<div class="card row prot" da
 function chatHtml(){const m=MATCHES.find(x=>x.id===chat),ou=m?other(m):'',o=P(ou);
 return `${logoTop(70)}<div class="card prot"><div class="row" style="margin-bottom:8px"><button class="btn g" data-a="back" aria-label="Back">←</button>${avHtml(o,1)}<b style="flex:1">${esc(o.name)}</b><button class="btn g sm" data-a="call" data-v="${ou}" aria-label="Voice call">📞 Call</button></div>
 <div class="msgs" id="msgs">${MSGS.map(x=>`<div class="m${x.from===ME.uid?' me':''}">${x.t==='img'?`<img src="${x.x}" draggable="false" alt="">`:esc(x.x)}${x.from!==ME.uid?`<div class="rp" data-a="report" data-v="${ou}">Report</div>`:''}</div>`).join('')}</div>
-<div class="row" style="margin-top:8px"><button class="btn g" style="padding:11px 14px" data-a="pickcm" aria-label="Send a photo">📎</button><input id="t" placeholder="Type a message" maxlength="500" style="margin:0"><button class="btn" data-a="send" aria-label="Send">➤</button></div>
+<div id="typ" class="typing"${typOn?'':' hidden'}><span></span><span></span><span></span> typing...</div><div class="row" style="margin-top:8px"><button class="btn g" style="padding:11px 14px" data-a="pickcm" aria-label="Send a photo">📎</button><input id="t" placeholder="Type a message" maxlength="500" style="margin:0"><button class="btn" data-a="send" aria-label="Send">➤</button></div>
 <div style="font-size:12px;color:var(--mut);margin-top:6px">Do not share phone numbers, email or social IDs here. A call only starts if the other person accepts.</div></div>`}
 
 function groupsHtml(){
@@ -320,7 +363,7 @@ function page(){clearInterval(timer);const app=$('#app');
 if(!ME){app.innerHTML=authHtml();return}
 if(ME.blockUntil>Date.now()){app.innerHTML=blockHtml();timer=setInterval(()=>{const s=Math.ceil((ME.blockUntil-Date.now())/1000);if(s<=0)render();else if($('#cd'))$('#cd').textContent=fmt(s)},1000);return}
 if(chat||grp){app.innerHTML=chat?chatHtml():grpHtml();const m=$('#msgs');if(m)m.scrollTop=m.scrollHeight;return}
-const B=({home:homeHtml,disc:discHtml,chats:chatsHtml,groups:groupsHtml,gnew:gnewHtml,alerts:alertsHtml,safety:safetyHtml,me:meHtml}[tab]||homeHtml)(),un=unreadCount();
+const B=nudges()+({home:homeHtml,disc:discHtml,chats:chatsHtml,groups:groupsHtml,gnew:gnewHtml,alerts:alertsHtml,safety:safetyHtml,me:meHtml}[tab]||homeHtml)(),un=unreadCount();
 app.innerHTML=`${logoTop()}${B}<nav>${NAV.map(([k,ic,l])=>`<button class="${(tab===k||(k==='groups'&&tab==='gnew'))?'on':''}" data-a="tab" data-v="${k}"><span class="ic">${ic}</span>${l}${k==='alerts'&&un?` <span class="pill">${un}</span>`:''}</button>`).join('')}</nav>`}
 function render(){page();document.querySelectorAll('.callbar').forEach(x=>x.remove());clearInterval(ctimer);
 if(ME&&call){document.body.insertAdjacentHTML('beforeend',callHtml());
@@ -360,6 +403,7 @@ async function sendMsg(t,x){const path=chat?['chats',chat]:['groups',grp];await 
 function markRead(){NOTIFS.filter(n=>!n.read).forEach(n=>updateDoc(doc(db,'notifs',n.id),{read:true}).catch(()=>{}))}
 document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]');if(!el)return;e.preventDefault();
   const a=el.dataset.a,v=el.dataset.v;
+  const st=setTimeout(()=>spin(1),250);
   try{switch(a){
   case'mode':authMode=v;render();break;
   case'signup':await signup();break;
@@ -377,11 +421,11 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]'
   case'like':{await setDoc(doc(db,'likes',ME.uid+'_'+v),{from:ME.uid,to:v,ts:serverTimestamp()});MY.likes.add(v);
     const r=await getDocs(query(collection(db,'likes'),where('to','==',ME.uid),where('from','==',v)));
     if(!r.empty){await setDoc(doc(db,'chats',[ME.uid,v].sort().join('_')),{members:[ME.uid,v].sort()});
-      notify(v,'match',{}).catch(()=>{});render();modal(`<h2>🎉 It's a match!</h2><p>You and ${esc(P(v).name)} connected. Say hello in Chats.</p>`)}
+      notify(v,'match',{}).catch(()=>{});render();confetti();modal(`<h2>🎉 It's a match!</h2><p>You and ${esc(P(v).name)} connected. Say hello in Chats.</p>`)}
     else{notify(v,'like',{}).catch(()=>{});render();toast('Connection sent ♥')}break}
   case'pass':await setDoc(doc(db,'passes',ME.uid+'_'+v),{from:ME.uid,to:v});MY.passes.add(v);render();break;
-  case'open':chat=v;watch(['chats',v]);render();break;
-  case'back':unMsg&&unMsg();unMsg=null;chat=null;MSGS=[];render();break;
+  case'open':chat=v;watch(['chats',v]);watchTyp(v);render();break;
+  case'back':unMsg&&unMsg();unMsg=null;unTyp&&unTyp();unTyp=null;typOn=false;chat=null;MSGS=[];render();break;
   case'send':{const t=$('#t').value.trim();if(t&&await guard(t,'#t')){$('#t').value='';await sendMsg('text',t)}break}
   case'call':await requestCall(v);break;
   case'acall':await acceptCall();break;
@@ -426,8 +470,11 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]'
   case'tod':{const L={truth:TRUTHS,dare:DARES,wyr:WYR,ice:DAILYQ}[v],lab={truth:'Truth',dare:'Dare',wyr:'Would you rather',ice:'Icebreaker'}[v];
     await updateDoc(doc(db,'groups',grp),{'game.card':lab+': '+L[Math.random()*L.length|0]});break}
   case'nxt':{const g=GROUPS.find(x=>x.id===grp);await updateDoc(doc(db,'groups',grp),{'game.turn':g.game.turn+1,'game.card':''});break}
+  case'theme':{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('fr_theme',t)}catch(x){}const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=t==='dark'?'#1f1050':'#e8186d';render();break}
+  case'install':if(instEv){instEv.prompt();await instEv.userChoice;instEv=null;render()}break;
+  case'notif':await askNotif();break;
   case'close':el.closest('.modal').remove();break}
-  }catch(x){toast('Error: '+(x.code||x.message))}
+  }catch(x){toast('Error: '+(x.code||x.message))}finally{clearTimeout(st);spin(0)}
 });
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const t=e.target.value?e.target.value.trim():'';
   if(e.target.id==='t'&&t)$('[data-a=send]').click();if(e.target.id==='gt'&&t)$('[data-a=gsend]').click()});
@@ -438,7 +485,32 @@ window.addEventListener('focus',()=>document.body.classList.remove('away'));
 document.addEventListener('visibilitychange',()=>document.body.classList.toggle('away',document.hidden));
 document.addEventListener('keyup',e=>{if(e.key==='PrintScreen'){try{navigator.clipboard.writeText('')}catch(x){}}});
 window.addEventListener('beforeunload',()=>{if(call)endCall(true)});
-$('#app').innerHTML=`${logoTop()}<p style="text-align:center;color:#fff">Loading...</p>`;
+
+/* ---------- v4 extras: PWA, notifications, typing, spinner ---------- */
+let swReg=null,typOn=false,unTyp=null,typT=null,lastTy=0,seenN=null,instEv=null;
+const spin=on=>{let s=$('#gspin');if(!s){s=document.createElement('div');s.id='gspin';s.className='spin gs';document.body.appendChild(s)}s.style.display=on?'block':'none'};
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r=>{swReg=r}).catch(()=>{});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEv=e;if(ME)render()});
+function ping(title,body){try{if(!('Notification' in window)||Notification.permission!=='granted'||!document.hidden)return;
+  if(swReg)swReg.showNotification(title,{body,icon:'icon-192.png',badge:'icon-192.png',tag:'frendlie'});else new Notification(title,{body,icon:'icon-192.png'})}catch(e){}}
+function pingNew(){const ids=new Set(NOTIFS.map(n=>n.id));
+  if(seenN)NOTIFS.filter(n=>!seenN.has(n.id)&&!n.read).forEach(n=>{const T={like:'wants to connect with you',match:'matched with you 🎉',call:'tried to call you',group:'added you to a group'}[n.type]||'sent you something';ping('Frendlie',(P(n.from).name||'Someone')+' '+T)});
+  seenN=ids}
+async function askNotif(){if(!('Notification' in window))return toast('Notifications are not supported on this browser');
+  const r=await Notification.requestPermission();toast(r==='granted'?'Notifications are on 🔔':'Notifications are blocked. You can allow them in browser settings.');render()}
+function nudges(){let h='';
+  if(tab==='home'&&instEv)h+=`<div class="card row"><div style="font-size:30px">📲</div><div style="flex:1"><b>Install Frendlie</b><div style="font-size:13px;color:var(--mut)">Add it to your home screen like an app</div></div><button class="btn sm" data-a="install">Install</button></div>`;
+  if((tab==='home'||tab==='alerts'||tab==='me')&&'Notification' in window&&Notification.permission==='default')h+=`<div class="card row"><div style="font-size:30px">🔔</div><div style="flex:1"><b>Turn on notifications</b><div style="font-size:13px;color:var(--mut)">Know when someone connects, messages or calls</div></div><button class="btn sm" data-a="notif">Allow</button></div>`;
+  return h}
+function watchTyp(cid){unTyp&&unTyp();typOn=false;const m=MATCHES.find(x=>x.id===cid);if(!m)return;let first=true;
+  unTyp=onValue(ref(rtdb,'sig/'+cid+'/t/'+other(m)),s=>{if(first){first=false;return}
+    typOn=!!s.val();const e=$('#typ');if(e)e.hidden=!typOn;clearTimeout(typT);
+    if(typOn)typT=setTimeout(()=>{typOn=false;const e=$('#typ');if(e)e.hidden=true},4500)})}
+document.addEventListener('input',e=>{if(e.target.id==='t'&&chat&&ME&&Date.now()-lastTy>2000){lastTy=Date.now();set(ref(rtdb,'sig/'+chat+'/t/'+ME.uid),Date.now()).catch(()=>{})}});
+function confetti(){const c=document.createElement('div');c.className='conf';
+  c.innerHTML=Array.from({length:26},(_,i)=>`<i style="left:${Math.random()*100}%;animation-delay:${Math.random()*.6}s;font-size:${16+Math.random()*16|0}px">${['🎉','💖','✨','🌸','🎊'][i%5]}</i>`).join('');
+  document.body.appendChild(c);setTimeout(()=>c.remove(),3500)}
+$('#app').innerHTML=`${logoTop()}<div class="boot"><div class="spin"></div></div>`;
 </script>
 </body>
 </html>
