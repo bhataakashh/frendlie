@@ -92,6 +92,10 @@ nav button{transition:background .2s,color .2s;position:relative}.nav .pill,nav 
  nav button{font-size:12px;padding:8px 4px}.msgs{height:52dvh}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sv{display:inline-block;width:1.4em;height:1.4em;vertical-align:-.35em;border-radius:50%;overflow:hidden}.sv svg{width:100%;height:100%;display:block}
+.av .sv,.ic .sv{width:100%;height:100%;display:block;border-radius:50%}.ic{overflow:hidden}
+.dots{position:absolute;top:8px;right:10px;background:none;border:0;font-size:28px;line-height:1;color:var(--txt);cursor:pointer;padding:4px 10px}
+.pres{font-size:12px;color:var(--mut)}.rp{font-size:11px;opacity:.7;cursor:pointer;text-decoration:underline;margin-top:2px}
 </style>
 </head>
 <body>
@@ -107,7 +111,7 @@ const fb=initializeApp({apiKey:"AIzaSyDjSuT-ejGPPHOKImY9QXBarZHkymO3-mk",authDom
 const auth=getAuth(fb),db=getFirestore(fb),rtdb=getDatabase(fb);
 const LOGO="data:image/webp;base64,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";
 const CITIES=['Srinagar','Jammu','Anantnag','Baramulla','Budgam','Pulwama','Kupwara','Ganderbal','Bandipora','Shopian','Kulgam','Udhampur','Kathua','Samba','Rajouri','Poonch','Doda','Kishtwar','Reasi','Ramban'];
-const AV=['🦋','🌸','🏔️','🍁','🦊','🐼','🌷','🦉'];
+const AV=['g1','g2','g3','g4','g5','g6','b1','b2','b3','b4','b5','b6'];
 const INTERESTS=['Music','Movies','Cricket','Travel','Food','Books','Gaming','Art','Nature','Fitness','Dance','Photography','Shayari','Trekking','Fashion','Cooking'];
 const TRUTHS=['What is your most embarrassing moment?','Which Bollywood song do you secretly love?','What is the best trip you have ever taken?','What is one thing you are afraid of?','What was your funniest school memory?','What is your dream job?','Which food could you eat every day?','What is the kindest thing a friend did for you?'];
 const DARES=['Sing two lines of your favourite song.','Do your best impression of someone in the group.','Say a tongue twister three times fast.','Tell a joke that makes everyone laugh.','Speak in a funny accent for 2 minutes.','Describe your perfect weekend using only emojis.','Dance for 15 seconds and describe it.','Say something nice about each person in the group.'];
@@ -125,7 +129,7 @@ function toast(t){const d=document.createElement('div');d.className='toast';d.te
 function modal(h,label){const d=document.createElement('div');d.className='modal';d.innerHTML=`<div class="card">${h}<button class="btn w" data-a="close" style="margin-top:10px">${label||'OK'}</button></div>`;document.body.appendChild(d)}
 const err=t=>{const e=$('#err');if(e)e.textContent=t};
 const warn=m=>modal(`<h2>⚠️ Warning</h2><p>${m}</p>`);
-const avHtml=(p,s)=>`<div class="av${s?' s':''}">${p.photo?`<img src="${p.photo}" draggable="false" alt="">`:(p.av||'🙂')}</div>`;
+const avHtml=(p,s)=>`<div class="av${s?' s':''}">${p.photo?`<img src="${p.photo}" draggable="false" alt="">`:avInner(p.av)}</div>`;
 const timeAgo=ts=>{if(!ts)return'';const s=Math.floor((Date.now()-ts)/1000);if(s<60)return'now';if(s<3600)return Math.floor(s/60)+'m';if(s<86400)return Math.floor(s/3600)+'h';return Math.floor(s/86400)+'d'};
 const authErr=e=>({'auth/email-already-in-use':'This email is already registered. Please log in.','auth/invalid-credential':'Incorrect email or password.','auth/wrong-password':'Incorrect email or password.','auth/user-not-found':'Incorrect email or password.','auth/weak-password':'Password must have at least 6 characters.','auth/invalid-email':'Enter a valid email address.','auth/operation-not-allowed':'Email sign-in is not switched on in Firebase yet.','auth/network-request-failed':'No internet connection.','auth/too-many-requests':'Too many attempts. Please wait a bit and try again.'}[e.code]||('Error: '+(e.code||e.message)));
 const safe=fn=>async(...a)=>{try{await fn(...a)}catch(e){toast('Error: '+(e.code||e.message))}};
@@ -136,7 +140,7 @@ let tab='disc',chat=null,grp=null,authMode='up',signing=false,timer=null,sel=[],
 let unM=null,unG=null,unMsg=null,unN=null;
 let sigUn=[],call=null,unCall=null,pc=null,localStream=null,remoteStream=null,callTimer=null,ringAudio=null;
 const P=u=>u===ME.uid?ME:(PEOPLE[u]||{name:'Member',av:'🙂'});
-function stopAll(){[unM,unG,unMsg,unN,unCall].forEach(f=>f&&f());unM=unG=unMsg=unN=unCall=null;MATCHES=[];GROUPS=[];MSGS=[];NOTIFS=[];chat=null;grp=null;endCall(false)}
+function stopAll(){[unM,unG,unMsg,unN,unCall].forEach(f=>f&&f());unM=unG=unMsg=unN=unCall=null;MATCHES=[];GROUPS=[];MSGS=[];NOTIFS=[];chat=null;grp=null;viewU=null;endCall(false)}
 
 /* ---------- Safety filters ---------- */
 const D='[0-9\\u0966-\\u096F]';
@@ -173,15 +177,15 @@ async function need(ids){const m=[...new Set(ids)].filter(i=>i&&!PEOPLE[i]&&i!==
   await Promise.all(m.map(async i=>{const s=await getDoc(doc(db,'users',i));if(s.exists())PEOPLE[i]={uid:i,...s.data()}}))}
 function soft(){if(!ME||tab==='me'||tab==='gnew'||call)return;rr()}
 function unreadCount(){return NOTIFS.filter(n=>!n.read).length}
-async function boot(){seenN=null;stopAll();const mine=c=>getDocs(query(collection(db,c),where('from','==',ME.uid)));
+async function boot(){seenN=null;firstM=true;lastSeenM={};startPresence();stopAll();const mine=c=>getDocs(query(collection(db,c),where('from','==',ME.uid)));
   const [us,lk,ps]=await Promise.all([getDocs(query(collection(db,'users'),limit(80))),mine('likes'),mine('passes')]);
   PEOPLE={};us.forEach(d=>{if(d.id!==ME.uid)PEOPLE[d.id]={uid:d.id,...d.data()}});
   MY.likes=new Set(lk.docs.map(d=>d.data().to));MY.passes=new Set(ps.docs.map(d=>d.data().to));
-  unM=onSnapshot(query(collection(db,'chats'),where('members','array-contains',ME.uid)),async s=>{MATCHES=s.docs.map(d=>({id:d.id,...d.data()}));await need(MATCHES.flatMap(m=>m.members));soft()},e=>toast('Chats: '+e.code));
+  unM=onSnapshot(query(collection(db,'chats'),where('members','array-contains',ME.uid)),async s=>{MATCHES=s.docs.map(d=>({id:d.id,...d.data()}));await need(MATCHES.flatMap(m=>m.members));chkMsgs();soft()},e=>toast('Chats: '+e.code));
   unG=onSnapshot(query(collection(db,'groups'),where('members','array-contains',ME.uid)),async s=>{GROUPS=s.docs.map(d=>({id:d.id,...d.data()}));await need(GROUPS.flatMap(g=>g.members));soft()},e=>toast('Groups: '+e.code));
   unN=onSnapshot(query(collection(db,'notifs'),where('to','==',ME.uid),limit(40)),async s=>{NOTIFS=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts);await need(NOTIFS.map(n=>n.from));pingNew();soft()},e=>toast('Notifs: '+e.code));
   listenCalls()}
-function watch(path){unMsg&&unMsg();MSGS=[];unMsg=onSnapshot(query(collection(db,...path,'messages'),orderBy('ts')),s=>{const old=MSGS.length;MSGS=s.docs.map(d=>d.data());const lm=MSGS[MSGS.length-1];if(old&&MSGS.length>old&&lm&&lm.from!==ME.uid)ping('New message',(P(lm.from).name||'Someone')+' sent you a message');rr()},e=>toast('Cannot load messages: '+e.code))}
+function watch(path){unMsg&&unMsg();MSGS=[];unMsg=onSnapshot(query(collection(db,...path,'messages'),orderBy('ts')),s=>{MSGS=s.docs.map(d=>({id:d.id,...d.data()}));if(chat)markChat(chat);rr()},e=>toast('Cannot load messages: '+e.code))}
 const other=m=>m.members.find(x=>x!==ME.uid);
 async function notify(to,type,extra){if(to===ME.uid)return;await addDoc(collection(db,'notifs'),{to,from:ME.uid,type,...extra,read:false,ts:Date.now()})}
 
@@ -193,26 +197,26 @@ function listenCalls(){unCall&&unCall();
     const v=snap.val();if(!v)return;
     if(Date.now()-(v.ts||0)>60000){remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});return}
     if(v.state==='ringing'&&!call){await need([v.from]);
-      call={room:v.room,peer:v.from,role:'callee',state:'ringing'};ping('Incoming call',(P(v.from).name||'Someone')+' is calling you 📞');render()}
+      call={room:v.room,peer:v.from,role:'callee',state:'ringing'};ping('Incoming call',(P(v.from).name||'Someone')+' is calling you 📞');startRing('in');render()}
     else if(v.state==='accepted'&&call&&call.room===v.room&&call.role==='caller'&&call.state==='calling'){
-      clearTimeout(callTimer);call.state='connecting';render();remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});await startPeer(true)}
+      clearTimeout(callTimer);stopRing();call.state='connecting';render();remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});await startPeer(true)}
     else if(v.state==='ended'&&call&&call.room===v.room){remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});endCall(false)}
   },e=>toast('Call service: '+(e.code||e.message)))}
 async function requestCall(peer){
   if(call)return toast('You are already in a call');
   const room=roomOf(ME.uid,peer);
-  call={room,peer,role:'caller',state:'calling'};render();
+  call={room,peer,role:'caller',state:'calling'};startRing('out');render();
   try{await remove(ref(rtdb,'sig/'+room)).catch(()=>{});
     await set(ref(rtdb,'calls/'+peer),{state:'ringing',from:ME.uid,room,ts:Date.now()});
     notify(peer,'call',{}).catch(()=>{});
     callTimer=setTimeout(()=>{if(call&&call.state==='calling'){toast('No answer');endCall(true)}},45000)}
   catch(e){toast('Could not start the call: '+(e.code||e.message));endCall(false)}}
-async function acceptCall(){if(!call||call.role!=='callee')return;
+async function acceptCall(){if(!call||call.role!=='callee')return;stopRing();
   call.state='connecting';render();
   remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});
   await set(ref(rtdb,'calls/'+call.peer),{state:'accepted',from:ME.uid,room:call.room,ts:Date.now()});
   await startPeer(false)}
-async function declineCall(){if(!call)return;
+async function declineCall(){if(!call)return;stopRing();
   remove(ref(rtdb,'calls/'+ME.uid)).catch(()=>{});
   await set(ref(rtdb,'calls/'+call.peer),{state:'ended',from:ME.uid,room:call.room,ts:Date.now()}).catch(()=>{});
   endCall(false)}
@@ -242,7 +246,7 @@ async function startPeer(isCaller){
       await me.setRemoteDescription(new RTCSessionDescription(v));flush();
       const an=await me.createAnswer();await me.setLocalDescription(an);
       await set(ref(rtdb,sig+'/answer'),{sdp:an.sdp,type:an.type});call.state='connected';call.t0=Date.now();render()}))}}
-function endCall(tellPeer){
+function endCall(tellPeer){stopRing();
   const had=call;
   if(had&&tellPeer&&ME)set(ref(rtdb,'calls/'+had.peer),{state:'ended',from:ME.uid,room:had.room,ts:Date.now()}).catch(()=>{});
   if(had)remove(ref(rtdb,'sig/'+had.room)).catch(()=>{});
@@ -254,14 +258,14 @@ function endCall(tellPeer){
 function muteToggle(){if(!localStream)return;const t=localStream.getAudioTracks()[0];if(!t)return;t.enabled=!t.enabled;call.muted=!t.enabled;render()}
 
 /* ---------- Views ---------- */
-const NAV=[['home','🏠','Home'],['disc','🔍','Discover'],['chats','💬','Chats'],['groups','👥','Groups'],['alerts','🔔','Alerts'],['safety','🛡️','Safety'],['me','👤','Profile']];
+const NAV=[['home','🏠','Home'],['disc','🔍','Discover'],['chats','💬','Chats'],['groups','👥','Groups'],['alerts','🔔','Alerts'],['me','👤','Profile']];
 const dayKey=()=>new Date().toLocaleDateString('en-CA');
 let ANS=[],ctimer=null;
 async function loadAnswers(){const s=await getDocs(query(collection(db,'answers'),where('day','==',dayKey()),limit(40)));ANS=s.docs.map(d=>d.data()).sort((a,b)=>b.ts-a.ts)}
 const shared=p=>(p.interests||[]).filter(i=>(ME.interests||[]).includes(i)).length;
 const chips=(arr,on,a)=>arr.map(i=>`<span class="chip${on(i)?' on':''}" data-a="${a}" data-v="${i}">${i}</span>`).join('');
 const tags=a=>(a||[]).map(i=>`<span class="chip" style="cursor:default;padding:4px 10px">${esc(i)}</span>`).join('');
-const logoTop=s=>`<div class="top"><button class="bell" data-a="theme" aria-label="Toggle dark mode">${document.documentElement.dataset.theme==='dark'?'☀️':'🌙'}</button><img class="logo"${s?` style="width:${s}px;height:${s}px;border-radius:18px;padding:5px"`:''} src="${LOGO}" alt="Frendlie"></div>`;
+const logoTop=s=>`<div class="top"><img class="logo"${s?` style="width:${s}px;height:${s}px;border-radius:18px;padding:5px"`:''} src="${LOGO}" alt="Frendlie"></div>`;
 
 function authHtml(){const up=authMode==='up';
 return `${logoTop()}
@@ -277,8 +281,8 @@ ${up?`<label style="font-size:14px;color:var(--mut)">Date of birth (18+ only)</l
 
 function homeHtml(){const mine=ANS.find(a=>a.uid===ME.uid);
 return `<div class="card"><div style="font-size:13px;color:var(--mut)">💭 Question of the day</div><h2 style="margin-top:4px">${esc(DAILY_Q)}</h2>
-${mine?`<div class="note">Your answer: ${esc(mine.text)}</div>`:`<textarea id="dq" rows="2" maxlength="200" placeholder="Write a short, friendly answer"></textarea><div class="err" id="err"></div><button class="btn w" data-a="dqpost">Share my answer</button>`}</div>
-<div class="card"><h2>Today's answers</h2>${ANS.length?ANS.map(a=>`<div class="nitem"><div class="ic">${esc(a.av||'🙂')}</div><div style="flex:1"><b>${esc(a.name)}</b> <span style="font-size:12px;color:var(--mut)">📍 ${esc(a.city)}</span><div>${esc(a.text)}</div></div></div>`).join(''):'<p style="color:var(--mut)">No answers yet today. Be the first!</p>'}</div>
+${mine&&!editA?`<div class="note">Your answer: ${esc(mine.text)}${mine.edited?' <i style="font-size:12px;color:var(--mut)">(edited)</i>':''}</div><div class="row" style="margin-top:8px"><button class="btn g sm" data-a="dqedit">✏️ Edit</button><button class="btn g sm" data-a="dqdel">🗑️ Delete</button></div>`:`<textarea id="dq" rows="2" maxlength="200" placeholder="Write a short, friendly answer">${mine&&editA?esc(mine.text):''}</textarea><div class="err" id="err"></div><div class="row"><button class="btn w" style="flex:1" data-a="dqpost">${editA?'Save changes':'Share my answer'}</button>${editA?'<button class="btn g" data-a="dqcancel">Cancel</button>':''}</div>`}</div>
+<div class="card"><h2>Today's answers</h2>${ANS.length?ANS.map(a=>`<div class="nitem" style="align-items:flex-start"><div class="ic">${avInner(a.av)}</div><div style="flex:1"><b>${esc(a.name)}</b> <span style="font-size:12px;color:var(--mut)">📍 ${esc(a.city)}</span><div>${esc(a.text)}</div><div style="margin-top:4px"><a href="#" data-a="cm" data-v="${a.uid}" style="font-size:13px">💬 Comments${CMT[a.uid]?` (${CMT[a.uid].length})`:''}</a></div>${openC===a.uid?cmtHtml(a.uid):''}</div></div>`).join(''):'<p style="color:var(--mut)">No answers yet today. Be the first!</p>'}</div>
 <div class="card"><h2>Your space</h2><div class="row" style="flex-wrap:wrap"><button class="btn g sm" data-a="tab" data-v="disc">🔍 Meet people</button><button class="btn g sm" data-a="tab" data-v="chats">💬 ${MATCHES.length} chat${MATCHES.length===1?'':'s'}</button><button class="btn g sm" data-a="tab" data-v="groups">👥 ${GROUPS.length} group${GROUPS.length===1?'':'s'}</button></div></div>`}
 
 function cands(){return Object.values(PEOPLE).filter(p=>!MY.likes.has(p.uid)&&!MY.passes.has(p.uid)&&(ME.show==='All'||p.gender===ME.show)&&(!filterInt.size||(p.interests||[]).some(i=>filterInt.has(i))))
@@ -294,10 +298,10 @@ return f+`<div class="card prot" style="text-align:center">${avHtml(c)}<h2>${esc
 
 function chatsHtml(){
 if(!MATCHES.length)return `<div class="card" style="text-align:center"><h2>No matches yet</h2><p>Connect with a few profiles in Discover. When it is mutual, you can chat here.</p></div>`;
-return MATCHES.map(m=>{const o=P(other(m));return `<div class="card row prot" data-a="open" data-v="${m.id}" style="cursor:pointer">${avHtml(o,1)}<div><b>${esc(o.name)}</b><div style="color:var(--mut);font-size:14px">📍 ${esc(o.city||'')} · Tap to chat</div></div></div>`}).join('')}
+return MATCHES.map(m=>{const o=P(other(m));return `<div class="card row prot" data-a="open" data-v="${m.id}" style="cursor:pointer">${avHtml(o,1)}<div><b>${esc(o.name)}</b> ${unreadFlag(m)}<div style="color:var(--mut);font-size:14px">📍 ${esc(o.city||'')} · Tap to chat</div></div></div>`}).join('')}
 function chatHtml(){const m=MATCHES.find(x=>x.id===chat),ou=m?other(m):'',o=P(ou);
-return `${logoTop(70)}<div class="card prot"><div class="row" style="margin-bottom:8px"><button class="btn g" data-a="back" aria-label="Back">←</button>${avHtml(o,1)}<b style="flex:1">${esc(o.name)}</b><button class="btn g sm" data-a="call" data-v="${ou}" aria-label="Voice call">📞 Call</button></div>
-<div class="msgs" id="msgs">${MSGS.map(x=>`<div class="m${x.from===ME.uid?' me':''}">${x.t==='img'?`<img src="${x.x}" draggable="false" alt="">`:esc(x.x)}${x.from!==ME.uid?`<div class="rp" data-a="report" data-v="${ou}">Report</div>`:''}</div>`).join('')}</div>
+return `${logoTop(70)}<div class="card prot"><div class="row" style="margin-bottom:8px"><button class="btn g" data-a="back" aria-label="Back">←</button><div class="row" style="flex:1;cursor:pointer;gap:10px" data-a="prof" data-v="${ou}">${avHtml(o,1)}<div><b>${esc(o.name)}</b><div class="pres" id="pres">${presTxt(ou)}</div></div></div><button class="btn g sm" data-a="call" data-v="${ou}" aria-label="Voice call">📞 Call</button></div>
+<div class="msgs" id="msgs">${MSGS.map(x=>`<div class="m${x.from===ME.uid?' me':''}">${x.t==='img'?`<img src="${x.x}" draggable="false" alt="">`:esc(x.x)}${x.from!==ME.uid?`<div class="rp" data-a="report" data-v="${ou}">Report</div>`:`<div class="rp" data-a="unsend" data-v="${x.id}">Unsend</div>`}</div>`).join('')}</div>
 <div id="typ" class="typing"${typOn?'':' hidden'}><span></span><span></span><span></span> typing...</div><div class="row" style="margin-top:8px"><button class="btn g" style="padding:11px 14px" data-a="pickcm" aria-label="Send a photo">📎</button><input id="t" placeholder="Type a message" maxlength="500" style="margin:0"><button class="btn" data-a="send" aria-label="Send">➤</button></div>
 <div style="font-size:12px;color:var(--mut);margin-top:6px">Do not share phone numbers, email or social IDs here. A call only starts if the other person accepts.</div></div>`}
 
@@ -307,28 +311,28 @@ GROUPS.map(g=>`<div class="card row" data-a="opg" data-v="${g.id}" style="cursor
 function gnewHtml(){const O=MATCHES.map(m=>P(other(m))),c=g=>sel.filter(i=>P(i).gender===g).length+(ME.gender===g?1:0);
 return `<div class="card"><h2>New group</h2><input id="gn" placeholder="Group name" maxlength="30" value="${esc(gname)}">
 <p style="font-size:14px;color:var(--mut)">You are one of the 4. Girls ${c('Woman')}/2, boys ${c('Man')}/2. Pick from your matches:</p>
-${O.length?`<div class="row" style="flex-wrap:wrap">${O.map(p=>`<button class="btn sm${sel.includes(p.uid)?'':' g'}" data-a="pick" data-v="${p.uid}">${p.av||'🙂'} ${esc(p.name)}</button>`).join('')}</div>`:'<p>Match with people first, then you can add them to a group.</p>'}
+${O.length?`<div class="row" style="flex-wrap:wrap">${O.map(p=>`<button class="btn sm${sel.includes(p.uid)?'':' g'}" data-a="pick" data-v="${p.uid}">${avInner(p.av)} ${esc(p.name)}</button>`).join('')}</div>`:'<p>Match with people first, then you can add them to a group.</p>'}
 <div class="err" id="err"></div><div class="row" style="margin-top:8px"><button class="btn g" data-a="gcancel">Cancel</button><button class="btn" style="flex:1" data-a="gmake">Create group</button></div></div>`}
 function grpHtml(){const g=GROUPS.find(x=>x.id===grp);if(!g)return `<div class="card"><button class="btn g" data-a="gback">←</button> Group not found</div>`;
 const cur=g.members[g.game.turn%g.members.length],cp=P(cur),mine=cur===ME.uid;
 return `${logoTop(70)}<div class="card prot"><div class="row" style="margin-bottom:8px"><button class="btn g" data-a="gback" aria-label="Back">←</button><b style="flex:1">${esc(g.name)}</b></div>
-<div style="font-size:13px;color:var(--mut);margin-bottom:8px">${g.members.map(u=>(P(u).av||'🙂')+' '+esc(P(u).name)).join(', ')}</div>
+<div style="font-size:13px;color:var(--mut);margin-bottom:8px">${g.members.map(u=>avInner(P(u).av)+' '+esc(P(u).name)).join(', ')}</div>
 <div class="note"><b>🎲 Mini-games</b>, turn: ${mine?'You':esc(cp.name)}
 ${g.game.card?`<div style="font-size:17px;margin:8px 0">${esc(g.game.card)}</div><button class="btn g sm" data-a="nxt">Next player</button>`:mine?`<div class="row" style="margin-top:8px;flex-wrap:wrap"><button class="btn sm" data-a="tod" data-v="truth">Truth</button><button class="btn sm" data-a="tod" data-v="dare">Dare</button><button class="btn sm" data-a="tod" data-v="wyr">Would you rather</button><button class="btn sm" data-a="tod" data-v="ice">Icebreaker</button></div>`:`<div style="margin-top:6px">${esc(cp.name)} is choosing...</div>`}</div>
-<div class="msgs" id="msgs" style="height:30dvh">${MSGS.map(m=>`<div class="m${m.from===ME.uid?' me':''}">${m.from===ME.uid?'':`<b style="font-size:12px">${esc(P(m.from).name)}</b><br>`}${esc(m.x)}</div>`).join('')}</div>
+<div class="msgs" id="msgs" style="height:30dvh">${MSGS.map(m=>`<div class="m${m.from===ME.uid?' me':''}">${m.from===ME.uid?'':`<b style="font-size:12px">${esc(P(m.from).name)}</b><br>`}${esc(m.x)}${m.from===ME.uid?`<div class="rp" data-a="unsend" data-v="${m.id}">Unsend</div>`:''}</div>`).join('')}</div>
 <div class="row" style="margin-top:8px"><input id="gt" placeholder="Message the group" maxlength="500" style="margin:0"><button class="btn" data-a="gsend" aria-label="Send">➤</button></div>
 <div style="font-size:12px;color:var(--mut);margin-top:6px">Do not share phone numbers, email or social IDs here. Group voice calls are coming later.</div></div>`}
 
 function alertsHtml(){
 if(!NOTIFS.length)return `<div class="card" style="text-align:center"><h2>No notifications yet</h2><p style="color:var(--mut)">When someone connects with you, matches with you, or calls you, you will see it here.</p></div>`;
-const T={like:p=>`${esc(p.name)} wants to connect with you`,match:p=>`You and ${esc(p.name)} matched 🎉`,call:p=>`${esc(p.name)} tried to call you`,group:p=>`${esc(p.name)} added you to a group`};
-const IC={like:'♥',match:'🎉',call:'📞',group:'👥'};
+const T={comment:p=>`${esc(p.name)} commented on your answer`,like:p=>`${esc(p.name)} wants to connect with you`,match:p=>`You and ${esc(p.name)} matched 🎉`,call:p=>`${esc(p.name)} tried to call you`,group:p=>`${esc(p.name)} added you to a group`};
+const IC={comment:'💬',like:'♥',match:'🎉',call:'📞',group:'👥'};
 return `<div class="card"><h2>Notifications</h2>${NOTIFS.map(n=>{const p=P(n.from),t=(T[n.type]||(()=>'New activity'))(p);
-const act=n.type==='like'&&!MY.likes.has(n.from)?`<button class="btn sm" data-a="like" data-v="${n.from}">Connect back</button>`:n.type==='match'?`<button class="btn sm g" data-a="tab" data-v="chats">Chat</button>`:n.type==='group'?`<button class="btn sm g" data-a="tab" data-v="groups">Open</button>`:'';
+const act=n.type==='like'&&!MY.likes.has(n.from)?`<button class="btn sm" data-a="like" data-v="${n.from}">Connect back</button>`:n.type==='match'?`<button class="btn sm g" data-a="tab" data-v="chats">Chat</button>`:n.type==='comment'?`<button class="btn sm g" data-a="tab" data-v="home">Open</button>`:n.type==='group'?`<button class="btn sm g" data-a="tab" data-v="groups">Open</button>`:'';
 return `<div class="nitem"><div class="ic">${IC[n.type]||'🔔'}</div><div style="flex:1">${t}${n.read?'':' <span class="pill">new</span>'}<div style="font-size:12px;color:var(--mut)">${timeAgo(n.ts)}</div></div>${act}</div>`}).join('')}</div>`}
 
 function safetyHtml(){
-return `<div class="card"><h2>🛡️ Safety Center</h2><p style="color:var(--mut);font-size:14px">Frendlie is about genuine connections. Here is how we keep it safe and what you can do.</p>
+return `<button class="btn g sm" data-a="tab" data-v="me" style="margin-bottom:12px">← Profile</button><div class="card"><h2>🛡️ Safety Center</h2><p style="color:var(--mut);font-size:14px">Frendlie is about genuine connections. Here is how we keep it safe and what you can do.</p>
 <ul style="padding-left:18px;line-height:1.7;font-size:15px"><li>Never share your phone number, email, social IDs or exact address. Such messages are deleted automatically.</li><li>Your exact location is never collected. Only your city is shown.</li><li>Voice calls start only if the other person accepts, and you can end or decline any time.</li><li>Do not send money or share OTPs and passwords with anyone.</li><li>Meet only in public places, and tell a family member or friend first.</li><li>Abusive language is deleted and pauses the account for 5 minutes.</li></ul>
 <div class="note">In an emergency, call <b>112</b> (India emergency number).</div></div>
 <div class="card"><h2>Report a problem</h2><select id="rr">${opts(['Harassment or abuse','Fake profile','Asking for contact details','Inappropriate photo','Something else'])}</select>
@@ -336,9 +340,9 @@ return `<div class="card"><h2>🛡️ Safety Center</h2><p style="color:var(--mu
 <div class="card"><button class="btn g w" data-a="policy">Read the Privacy Policy</button></div>`}
 
 function meHtml(){const mi=ME.interests||[];
-return `<div class="card prot" style="text-align:center">${avHtml(ME)}<b style="font-size:20px">${esc(ME.name)}, ${ME.age}</b><div style="color:var(--mut)">${esc(ME.email)}</div></div>
+return `<div class="card prot" style="text-align:center;position:relative"><button class="dots" data-a="menu" aria-label="Menu">⋮</button>${avHtml(ME)}<b style="font-size:20px">${esc(ME.name)}, ${ME.age}</b><div style="color:var(--mut)">${esc(ME.email)}</div></div>
 <div class="card"><h2>Your profile</h2><div style="font-size:14px;color:var(--mut)">Pick an avatar or upload your own photo. Photos are protected: no download, no right-click, hidden when you switch apps. Profiles with a photo get more visibility.</div>
-<div class="row" style="flex-wrap:wrap;margin:10px 0">${AV.map(a=>`<button class="btn g sm" style="font-size:22px" data-a="av" data-v="${a}">${a}</button>`).join('')}</div>
+<div class="row" style="flex-wrap:wrap;margin:10px 0">${AV.map(a=>`<button class="btn g sm" style="padding:3px;width:54px;height:54px;border-radius:50%" data-a="av" data-v="${a}">${avInner(a)}</button>`).join('')}</div>
 <button class="btn g w" data-a="pickph">📷 Upload photo from gallery</button>
 ${ME.photo?'<button class="btn g w" style="margin-top:8px" data-a="rmph">Remove photo</button>':''}
 <textarea id="bio" rows="3" maxlength="500" placeholder="About me (up to 500 characters)">${esc(ME.bio)}</textarea>
@@ -362,13 +366,14 @@ return `<div class="callbar"><div class="pulse">${avHtml(p)}</div><h2 style="mar
 function page(){clearInterval(timer);const app=$('#app');
 if(!ME){app.innerHTML=authHtml();return}
 if(ME.blockUntil>Date.now()){app.innerHTML=blockHtml();timer=setInterval(()=>{const s=Math.ceil((ME.blockUntil-Date.now())/1000);if(s<=0)render();else if($('#cd'))$('#cd').textContent=fmt(s)},1000);return}
+if(viewU){app.innerHTML=profHtml(viewU);return}
 if(chat||grp){app.innerHTML=chat?chatHtml():grpHtml();const m=$('#msgs');if(m)m.scrollTop=m.scrollHeight;return}
 const B=nudges()+({home:homeHtml,disc:discHtml,chats:chatsHtml,groups:groupsHtml,gnew:gnewHtml,alerts:alertsHtml,safety:safetyHtml,me:meHtml}[tab]||homeHtml)(),un=unreadCount();
-app.innerHTML=`${logoTop()}${B}<nav>${NAV.map(([k,ic,l])=>`<button class="${(tab===k||(k==='groups'&&tab==='gnew'))?'on':''}" data-a="tab" data-v="${k}"><span class="ic">${ic}</span>${l}${k==='alerts'&&un?` <span class="pill">${un}</span>`:''}</button>`).join('')}</nav>`}
+app.innerHTML=`${logoTop()}${B}<nav>${NAV.map(([k,ic,l])=>`<button class="${(tab===k||(k==='groups'&&tab==='gnew')||(k==='me'&&tab==='safety'))?'on':''}" data-a="tab" data-v="${k}"><span class="ic">${ic}</span>${l}${(k==='alerts'?un:k==='chats'?unreadChats():0)?` <span class="pill">${k==='alerts'?un:unreadChats()}</span>`:''}</button>`).join('')}</nav>`}
 function render(){page();document.querySelectorAll('.callbar').forEach(x=>x.remove());clearInterval(ctimer);
 if(ME&&call){document.body.insertAdjacentHTML('beforeend',callHtml());
 if(call.state==='connected')ctimer=setInterval(()=>{const e=$('#ct');if(e)e.textContent=fmt(Math.floor((Date.now()-call.t0)/1000))},1000)}}
-function rr(){const a=$('#gt')||$('#t')||$('#dq'),v=a?a.value:'',id=a?a.id:'';render();if(id&&$('#'+id))$('#'+id).value=v}
+function rr(){const a=$('#gt')||$('#t')||$('#dq')||$('#ci'),v=a?a.value:'',id=a?a.id:'';render();if(id&&$('#'+id))$('#'+id).value=v}
 function syncP(){if(!ME||!$('#bio'))return;ME.bio=$('#bio').value;ME.city=$('#pc').value;ME.show=$('#sh').value}
 
 /* ---------- Auth ---------- */
@@ -380,7 +385,7 @@ async function signup(){const v=i=>$('#'+i).value.trim(),name=v('n'),email=v('e'
   if(a<18)return err('You are under 18. You cannot create an account on Frendlie.');
   signing=true;
   try{const c=await createUserWithEmailAndPassword(auth,email,pw),uid=c.user.uid,gender=$('#g').value,city=$('#c').value;
-    const pub={name,age:a,gender,city,bio:'',av:'🦋',photo:'',show:'All',interests:[]},priv={dob,email,blockUntil:0,cs:0};
+    const pub={name,age:a,gender,city,bio:'',av:gender==='Man'?'b1':'g1',photo:'',show:'All',interests:[]},priv={dob,email,blockUntil:0,cs:0};
     await setDoc(doc(db,'users',uid),pub);await setDoc(doc(db,'priv',uid),priv);
     ME={uid,...pub,...priv};await boot();await loadAnswers().catch(()=>{});signing=false;tab='me';render();
     modal(`<div style="text-align:center"><div style="font-size:44px">📧</div><h2>Welcome to Frendlie!</h2><p>Confirmation card for <b>${esc(email)}</b></p><p>You are now a member of the Frendlie friendship space. Add a photo and a few interests to meet people who share them. 🌸</p></div>`,'Continue')
@@ -399,10 +404,10 @@ onAuthStateChanged(auth,async u=>{if(signing)return;
   catch(e){toast('Could not load your account: '+(e.code||e.message));render()}});
 
 /* ---------- Actions ---------- */
-async function sendMsg(t,x){const path=chat?['chats',chat]:['groups',grp];await addDoc(collection(db,...path,'messages'),{from:ME.uid,t,x,ts:serverTimestamp()})}
+async function sendMsg(t,x){const path=chat?['chats',chat]:['groups',grp];await addDoc(collection(db,...path,'messages'),{from:ME.uid,t,x,ts:serverTimestamp()});if(chat)updateDoc(doc(db,'chats',chat),{last:{from:ME.uid,ts:Date.now()}}).catch(()=>{})}
 function markRead(){NOTIFS.filter(n=>!n.read).forEach(n=>updateDoc(doc(db,'notifs',n.id),{read:true}).catch(()=>{}))}
 document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]');if(!el)return;e.preventDefault();
-  const a=el.dataset.a,v=el.dataset.v;
+  const a=el.dataset.a,v=el.dataset.v,fm=!!el.closest('.modal');if(fm&&a!=='close')document.querySelectorAll('.modal').forEach(m=>m.remove());
   const st=setTimeout(()=>spin(1),250);
   try{switch(a){
   case'mode':authMode=v;render();break;
@@ -416,7 +421,7 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]'
     ME.interests=arr;render();break}
   case'dqpost':{const t=$('#dq').value.trim();if(!t)return err('Please write an answer first.');
     if(!await guard(t,'#dq'))break;
-    await setDoc(doc(db,'answers',dayKey()+'_'+ME.uid),{uid:ME.uid,name:ME.name,av:ME.av,city:ME.city,text:t,day:dayKey(),ts:Date.now()});
+    await setDoc(doc(db,'answers',dayKey()+'_'+ME.uid),{uid:ME.uid,name:ME.name,av:ME.av,city:ME.city,text:t,day:dayKey(),ts:(editA&&ANS.find(x=>x.uid===ME.uid)||{}).ts||Date.now(),edited:!!editA});editA=false;
     await loadAnswers();render();toast('Answer shared');break}
   case'like':{await setDoc(doc(db,'likes',ME.uid+'_'+v),{from:ME.uid,to:v,ts:serverTimestamp()});MY.likes.add(v);
     const r=await getDocs(query(collection(db,'likes'),where('to','==',ME.uid),where('from','==',v)));
@@ -424,8 +429,8 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]'
       notify(v,'match',{}).catch(()=>{});render();confetti();modal(`<h2>🎉 It's a match!</h2><p>You and ${esc(P(v).name)} connected. Say hello in Chats.</p>`)}
     else{notify(v,'like',{}).catch(()=>{});render();toast('Connection sent ♥')}break}
   case'pass':await setDoc(doc(db,'passes',ME.uid+'_'+v),{from:ME.uid,to:v});MY.passes.add(v);render();break;
-  case'open':chat=v;watch(['chats',v]);watchTyp(v);render();break;
-  case'back':unMsg&&unMsg();unMsg=null;unTyp&&unTyp();unTyp=null;typOn=false;chat=null;MSGS=[];render();break;
+  case'open':chat=v;markChat(v);watch(['chats',v]);watchTyp(v);watchPres(other(MATCHES.find(x=>x.id===v)));render();break;
+  case'back':unMsg&&unMsg();unMsg=null;unTyp&&unTyp();unTyp=null;typOn=false;markChat(chat);unPres&&unPres();unPres=null;chat=null;MSGS=[];render();break;
   case'send':{const t=$('#t').value.trim();if(t&&await guard(t,'#t')){$('#t').value='';await sendMsg('text',t)}break}
   case'call':await requestCall(v);break;
   case'acall':await acceptCall();break;
@@ -441,7 +446,7 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]'
   case'savep':syncP();await updateDoc(doc(db,'users',ME.uid),{bio:ME.bio,city:ME.city,show:ME.show,interests:ME.interests||[]});toast('Profile saved');render();break;
   case'pickph':syncP();pickFile('image/*',f=>readImg(f,400,safe(async d=>{if(d.length>190000)return toast('Photo is too large, try another one.');await updateDoc(doc(db,'users',ME.uid),{photo:d});ME.photo=d;render()})));break;
   case'pickcm':pickFile('image/*',f=>readImg(f,500,safe(async d=>{if(d.length>280000)return toast('Photo is too large, try another one.');await sendMsg('img',d)})));break;
-  case'logout':await signOut(auth);break;
+  case'logout':try{await set(ref(rtdb,'presence/'+ME.uid),{on:false,ts:Date.now()})}catch(x){}unConn&&unConn();await signOut(auth);break;
   case'del':modal('<h2>Delete account?</h2><p>This permanently removes your account and profile.</p><button class="btn w" style="background:#d6204a" data-a="del2">Yes, delete everything</button>','Cancel');break;
   case'del2':{const u=auth.currentUser;
     for(const c of['likes','passes']){const s=await getDocs(query(collection(db,c),where('from','==',ME.uid)));for(const d of s.docs)await deleteDoc(d.ref)}
@@ -470,9 +475,28 @@ document.addEventListener('click',async e=>{const el=e.target.closest('[data-a]'
   case'tod':{const L={truth:TRUTHS,dare:DARES,wyr:WYR,ice:DAILYQ}[v],lab={truth:'Truth',dare:'Dare',wyr:'Would you rather',ice:'Icebreaker'}[v];
     await updateDoc(doc(db,'groups',grp),{'game.card':lab+': '+L[Math.random()*L.length|0]});break}
   case'nxt':{const g=GROUPS.find(x=>x.id===grp);await updateDoc(doc(db,'groups',grp),{'game.turn':g.game.turn+1,'game.card':''});break}
-  case'theme':{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('fr_theme',t)}catch(x){}const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=t==='dark'?'#1f1050':'#e8186d';render();break}
+  case'theme':{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('fr_theme',t)}catch(x){}const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=t==='dark'?'#1f1050':'#e8186d';render();if(fm)modal(menuHtml(),'Close');break}
   case'install':if(instEv){instEv.prompt();await instEv.userChoice;instEv=null;render()}break;
   case'notif':await askNotif();break;
+  case'menu':modal(menuHtml(),'Close');break;
+  case'msafety':tab='safety';render();break;
+  case'ntog':{if(!('Notification' in window))return toast('Notifications are not supported on this browser');
+    const on=sndOn()&&Notification.permission==='granted';
+    if(on){try{localStorage.setItem('fr_notif','off')}catch(x){}toast('Notifications off')}
+    else{try{localStorage.setItem('fr_notif','on')}catch(x){}
+      if(Notification.permission==='default')await askNotif();else if(Notification.permission==='denied')toast('Blocked in browser settings. Allow notifications for this site there.');else toast('Notifications on 🔔')}
+    modal(menuHtml(),'Close');break}
+  case'unsend':await deleteDoc(doc(db,...(chat?['chats',chat]:['groups',grp]),'messages',v));break;
+  case'prof':viewU=v;watchPres(v);render();break;
+  case'pback':viewU=null;render();break;
+  case'dqedit':editA=true;render();break;
+  case'dqcancel':editA=false;render();break;
+  case'dqdel':await deleteDoc(doc(db,'answers',dayKey()+'_'+ME.uid));editA=false;await loadAnswers();render();toast('Answer deleted');break;
+  case'cm':openC=openC===v?null:v;if(openC)await loadCm(v);render();break;
+  case'csend':{const t=($('#ci')||{value:''}).value.trim();if(!t)break;if(!await guard(t,'#ci'))break;
+    await addDoc(collection(db,'answers',dayKey()+'_'+v,'comments'),{uid:ME.uid,name:ME.name,text:t,ts:Date.now()});
+    if(v!==ME.uid)notify(v,'comment',{}).catch(()=>{});await loadCm(v);render();break}
+  case'cdel':await deleteDoc(doc(db,'answers',dayKey()+'_'+openC,'comments',v));await loadCm(openC);render();break;
   case'close':el.closest('.modal').remove();break}
   }catch(x){toast('Error: '+(x.code||x.message))}finally{clearTimeout(st);spin(0)}
 });
@@ -491,10 +515,10 @@ let swReg=null,typOn=false,unTyp=null,typT=null,lastTy=0,seenN=null,instEv=null;
 const spin=on=>{let s=$('#gspin');if(!s){s=document.createElement('div');s.id='gspin';s.className='spin gs';document.body.appendChild(s)}s.style.display=on?'block':'none'};
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').then(r=>{swReg=r}).catch(()=>{});
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEv=e;if(ME)render()});
-function ping(title,body){try{if(!('Notification' in window)||Notification.permission!=='granted'||!document.hidden)return;
+function ping(title,body){try{if(!sndOn()||!('Notification' in window)||Notification.permission!=='granted'||!document.hidden)return;
   if(swReg)swReg.showNotification(title,{body,icon:'icon-192.png',badge:'icon-192.png',tag:'frendlie'});else new Notification(title,{body,icon:'icon-192.png'})}catch(e){}}
 function pingNew(){const ids=new Set(NOTIFS.map(n=>n.id));
-  if(seenN)NOTIFS.filter(n=>!seenN.has(n.id)&&!n.read).forEach(n=>{const T={like:'wants to connect with you',match:'matched with you 🎉',call:'tried to call you',group:'added you to a group'}[n.type]||'sent you something';ping('Frendlie',(P(n.from).name||'Someone')+' '+T)});
+  if(seenN)NOTIFS.filter(n=>!seenN.has(n.id)&&!n.read&&n.type!=='call').forEach(n=>{const T={comment:'commented on your answer',like:'wants to connect with you',match:'matched with you 🎉',call:'tried to call you',group:'added you to a group'}[n.type]||'sent you something';alertUser('ding','Frendlie',(P(n.from).name||'Someone')+' '+T)});
   seenN=ids}
 async function askNotif(){if(!('Notification' in window))return toast('Notifications are not supported on this browser');
   const r=await Notification.requestPermission();toast(r==='granted'?'Notifications are on 🔔':'Notifications are blocked. You can allow them in browser settings.');render()}
@@ -510,6 +534,51 @@ document.addEventListener('input',e=>{if(e.target.id==='t'&&chat&&ME&&Date.now()
 function confetti(){const c=document.createElement('div');c.className='conf';
   c.innerHTML=Array.from({length:26},(_,i)=>`<i style="left:${Math.random()*100}%;animation-delay:${Math.random()*.6}s;font-size:${16+Math.random()*16|0}px">${['🎉','💖','✨','🌸','🎊'][i%5]}</i>`).join('');
   document.body.appendChild(c);setTimeout(()=>c.remove(),3500)}
+
+/* ---------- v5: avatars, presence, sounds, profile view, comments ---------- */
+let viewU=null,editA=false,openC=null,CMT={},PRES={},unPres=null,unConn=null,firstM=true,lastSeenM={},AC=null,ringT=null;
+const SK=['#ffd9bd','#f1c27d','#e0ac69','#c68642'],HC=['#2b1b17','#5a3825','#a0522d','#d4a017','#1f2a44','#6b2d5c'],BG=['#ffd1e8','#d6e4ff','#d8f5e3','#ffe8c2','#e6d9ff','#ffd6d6'];
+function avSvg(code){const g=code[0]==='g',n=+code.slice(1)-1,sk=SK[n%4],hc=HC[n%6],bg=BG[n%6];
+  const back=g?`<path d="M14 40c-2-20 8-30 18-30s20 10 18 30c0 8-4 14-4 14H18s-4-6-4-14z" fill="${hc}"/>`:'';
+  const top=g?(n%2?`<path d="M16 30c2-14 12-18 16-18s14 4 16 18c-6-4-12-9-16-9s-10 5-16 9z" fill="${hc}"/>`:`<path d="M15 32c0-16 10-21 17-21s17 5 17 21c-5-3-9-10-17-10s-12 7-17 10z" fill="${hc}"/><circle cx="46" cy="18" r="5" fill="#ff4f8b"/>`)
+    :(n%2?`<path d="M17 30c0-14 8-19 15-19s15 5 15 19c-4-2-8-8-15-8s-11 6-15 8z" fill="${hc}"/>`:`<path d="M16 30c1-16 9-20 16-20s15 4 16 20c-3-3-5-9-16-9s-13 6-16 9z" fill="${hc}"/><path d="M14 27h36v4H14z" fill="#3b82f6"/>`);
+  return `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="${bg}"/>${back}<rect x="27" y="46" width="10" height="10" fill="${sk}"/><path d="M12 64c2-10 10-14 20-14s18 4 20 14z" fill="${g?'#ff7aa8':'#4f8cff'}"/><circle cx="32" cy="32" r="15" fill="${sk}"/>${top}<circle cx="26" cy="33" r="2.2" fill="#2b1230"/><circle cx="38" cy="33" r="2.2" fill="#2b1230"/><circle cx="22.5" cy="38" r="3" fill="#ff8fab" opacity=".55"/><circle cx="41.5" cy="38" r="3" fill="#ff8fab" opacity=".55"/><path d="M27 40q5 5 10 0" stroke="#2b1230" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`}
+const avInner=av=>/^[gb][1-6]$/.test(av||'')?`<span class="sv">${avSvg(av)}</span>`:esc(av||'🙂');
+function startPresence(){const pr=ref(rtdb,'presence/'+ME.uid);unConn&&unConn();
+  unConn=onValue(ref(rtdb,'.info/connected'),s=>{if(s.val()){onDisconnect(pr).set({on:false,ts:{'.sv':'timestamp'}});set(pr,{on:!document.hidden,ts:Date.now()}).catch(()=>{})}})}
+document.addEventListener('visibilitychange',()=>{if(ME)set(ref(rtdb,'presence/'+ME.uid),{on:!document.hidden,ts:Date.now()}).catch(()=>{})});
+function presTxt(u){const p=PRES[u];if(!p)return '';if(p.on)return '<span style="color:#1fa971">● Online</span>';
+  const t=timeAgo(p.ts);return p.ts?(t==='now'?'Last seen just now':'Last seen '+t+' ago'):''}
+function watchPres(u){unPres&&unPres();unPres=null;if(!u)return;
+  unPres=onValue(ref(rtdb,'presence/'+u),s=>{PRES[u]=s.val()||null;['#pres','#pres2'].forEach(q=>{const e=$(q);if(e)e.innerHTML=presTxt(u)})})}
+const readTs=id=>{try{return +localStorage.getItem('fr_r_'+id)||0}catch(e){return 0}};
+const markChat=id=>{try{if(id)localStorage.setItem('fr_r_'+id,Date.now())}catch(e){}};
+const isUnread=m=>m.last&&m.last.from!==ME.uid&&m.last.ts>readTs(m.id);
+const unreadChats=()=>MATCHES.filter(isUnread).length;
+const unreadFlag=m=>isUnread(m)?'<span class="pill">new</span>':'';
+function chkMsgs(){MATCHES.forEach(m=>{const l=m.last;if(!l)return;const prev=lastSeenM[m.id];lastSeenM[m.id]=l.ts;
+    if(firstM||prev===l.ts||l.from===ME.uid)return;
+    if(chat===m.id)markChat(m.id);
+    alertUser('msg','New message',(P(l.from).name||'Someone')+' sent you a message')});firstM=false}
+const sndOn=()=>{try{return localStorage.getItem('fr_notif')!=='off'}catch(e){return true}};
+function ac(){try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}return AC}
+document.addEventListener('click',()=>ac(),{passive:true});
+function tone(f,t0,d,v,ty){const c=ac();if(!c)return;const o=c.createOscillator(),g=c.createGain(),t=c.currentTime+t0;
+  o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(v||.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+d);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.05)}
+function chime(k){if(!sndOn())return;if(k==='msg'){tone(880,0,.18);tone(1320,.15,.3)}else{tone(660,0,.2);tone(990,.18,.3)}
+  try{navigator.vibrate&&navigator.vibrate(k==='msg'?[80]:[60,40,60])}catch(e){}}
+function alertUser(k,title,body){chime(k);ping(title,body)}
+function startRing(k){stopRing();if(!sndOn())return;
+  const go=()=>{if(k==='in'){[0,.5].forEach(o=>{tone(440,o,.4,.25,'triangle');tone(480,o,.4,.25,'triangle')});try{navigator.vibrate&&navigator.vibrate([400,150,400])}catch(e){}}else tone(425,0,1,.12)};
+  go();ringT=setInterval(go,k==='in'?2200:3000)}
+function stopRing(){clearInterval(ringT);ringT=null}
+function menuHtml(){const dark=document.documentElement.dataset.theme==='dark',on=sndOn()&&'Notification' in window&&Notification.permission==='granted';
+  return `<h2>Settings</h2><button class="btn g w" data-a="theme" style="margin:6px 0">🌙 Dark mode: ${dark?'On':'Off'}</button><button class="btn g w" data-a="ntog" style="margin:6px 0">🔔 Notifications &amp; sounds: ${on?'On':'Off'}</button><button class="btn g w" data-a="msafety" style="margin:6px 0">🛡️ Safety Center</button>`}
+function profHtml(u){const p=P(u),a=ANS.find(x=>x.uid===u),both=(p.interests||[]).filter(i=>(ME.interests||[]).includes(i));
+  return `${logoTop(70)}<div class="card prot" style="text-align:center"><div class="row" style="margin-bottom:6px"><button class="btn g" data-a="pback" aria-label="Back">←</button></div>${avHtml(p)}<h2 style="margin:10px 0 2px">${esc(p.name)}${p.age?', '+p.age:''}</h2><div id="pres2" class="pres">${presTxt(u)}</div><div style="color:var(--mut);margin:6px 0">📍 ${esc(p.city||'')}, J&amp;K</div>${p.bio?`<p>${esc(p.bio)}</p>`:'<p style="color:var(--mut)">No bio yet.</p>'}<div style="margin:8px 0">${tags(p.interests)||'<span style="color:var(--mut)">No interests added yet</span>'}</div>${both.length?`<div class="note">You both like: ${both.map(esc).join(', ')}</div>`:''}${a?`<div class="note" style="text-align:left"><div style="font-size:12px;color:var(--mut)">Today's answer</div>${esc(a.text)}</div>`:''}<div class="row" style="justify-content:center;margin-top:12px;flex-wrap:wrap"><button class="btn" data-a="pback">💬 Message</button><button class="btn g" data-a="call" data-v="${u}">📞 Call</button><button class="btn g" data-a="report" data-v="${u}">Report</button></div></div>`}
+async function loadCm(u){const s=await getDocs(collection(db,'answers',dayKey()+'_'+u,'comments'));CMT[u]=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.ts-b.ts)}
+function cmtHtml(u){return `<div style="margin-top:6px">${(CMT[u]||[]).map(c=>`<div style="font-size:14px;margin:4px 0"><b>${esc(c.name)}</b> ${esc(c.text)} ${c.uid===ME.uid?`<a href="#" data-a="cdel" data-v="${c.id}" style="font-size:12px;color:#d6204a">delete</a>`:''}</div>`).join('')||'<div style="font-size:13px;color:var(--mut)">No comments yet</div>'}<div class="row" style="margin-top:6px"><input id="ci" placeholder="Write a comment" maxlength="200" style="margin:0"><button class="btn sm" data-a="csend" data-v="${u}">Send</button></div></div>`}
 $('#app').innerHTML=`${logoTop()}<div class="boot"><div class="spin"></div></div>`;
 </script>
 </body>
